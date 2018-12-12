@@ -1,18 +1,17 @@
 package main 
 
-// import "fmt"
+import "fmt"
 
 func main() {
-	cards := deck{"Ace of spades", newCard()}
-	cards = append(cards, "Six of spades")
-	// fmt.Println(cards)
+	cards := newDeck()
+	// cards.print()
+	hand, remainingCards := deal(cards, 5)
+	hand.print()
+	fmt.Println("------------------")
+	remainingCards.print()
 
-	cards.print()
+	greeting := "Hi there!"
+	fmt.Println([]byte(greeting))
+
 }
-
-
-
-func newCard() string {
-
-	return "Five of Diamonds"
-}
+     
