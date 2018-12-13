@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+	"io/ioutil"
+	"os"
+)
 
 // create a new type of 'deck'
 // which is a slice of string
@@ -24,6 +29,29 @@ func newDeck() deck {
 
 func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
+
+}
+
+func (d deck) toString() string {
+	return strings.Join([]string(d), ",")
+
+}
+
+func (d deck)saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+}
+
+func newDeckFromFile(filename string) deck {
+	bs, err := ioutil.ReadFile(filename)
+	if err != nil {
+		// option #1 - log the error and return a call to newDeck()
+		// option #2 - log the error and entirely quit the program
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	s := strings.Split(string(bs), ",")
+	return deck(s)
 
 }
 
